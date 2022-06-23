@@ -1,2 +1,4 @@
 build/
 var/
+.mulle-make-build-dir
+version.old

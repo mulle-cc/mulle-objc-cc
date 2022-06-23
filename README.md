@@ -10,3 +10,8 @@ This little script rectifies the situation.
 
 Install where `musl-gcc` resides and use with `CC=musl-mulle-gcc`.
 
+
+### You are here
+
+![Overview](overview.dot.svg)
+
