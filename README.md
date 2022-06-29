@@ -10,6 +10,7 @@ This little script rectifies the situation.
 
 Install where `musl-gcc` resides and use with `CC=musl-mulle-gcc`.
 
+** DOES NOT WORK ON MacOS or Windows **
 
 ### You are here
 
