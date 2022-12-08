@@ -1,20 +1,29 @@
 cmake_minimum_required( VERSION 3.0)
 
-project( mulle-musl-gcc NONE)
+project( mulle-objc-cc NONE)
 
-set( PROJECT_VERSION "0.0.1")
+set( PROJECT_VERSION "0.1.0")
 
-set( SCRIPTS
-   musl-mulle-gcc
-   musl-mulle-clang
+# provide mulle-clang for subsequent crafts. Now most ObjC projects don't
+# need a `.mulle/env/craft/definition` dictionary to set mulle-clang, and
+# we can transparently pick up musl/cosmopolitan versions that because
+# COBJC is only defined --ifneeded
+#
+INSTALL( DIRECTORY definition
+         DESTINATION "share/mulle-craft"
+         USE_SOURCE_PERMISSIONS
+         PATTERN "*._DS_Store" EXCLUDE
 )
-
-INSTALL( FILES ${SCRIPTS}
-PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-            GROUP_EXECUTE GROUP_READ
-            WORLD_EXECUTE WORLD_READ
-DESTINATION "bin")
-
+INSTALL( DIRECTORY definition.windows
+         DESTINATION "share/mulle-craft"
+         USE_SOURCE_PERMISSIONS
+         PATTERN "*._DS_Store" EXCLUDE
+)
+INSTALL( DIRECTORY definition.mingw
+         DESTINATION "share/mulle-craft"
+         USE_SOURCE_PERMISSIONS
+         PATTERN "*._DS_Store" EXCLUDE
+)
 
 ######
 #
