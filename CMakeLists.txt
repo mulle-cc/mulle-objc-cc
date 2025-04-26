@@ -1,8 +1,8 @@
-cmake_minimum_required( VERSION 3.0)
+cmake_minimum_required( VERSION 3.15)
 
 project( mulle-objc-cc NONE)
 
-set( PROJECT_VERSION "0.1.1")
+set( PROJECT_VERSION "0.1.2")
 
 # provide mulle-clang for subsequent crafts. Now most ObjC projects don't
 # need a `.mulle/env/craft/definition` dictionary to set mulle-clang, and

@@ -7,3 +7,6 @@ version.old
 mulle-template-composer-*
 mulle-markdown-preview-*.html
 cola/wilted/
+*.bak
+.mulle/etc/make/build-dir
+vgcore.*
