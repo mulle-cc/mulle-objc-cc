@@ -1,0 +1,77 @@
+#! /usr/bin/env bash
+
+
+# --------------------------------------------------
+# Find the .m input file (if any)
+# --------------------------------------------------
+input_m=""
+for arg; do
+    case "$arg" in
+        *.m) input_m="$arg"; break ;;
+    esac
+done
+
+# No Objective-C → just be emcc and get out
+if [[ -z "$input_m" ]]
+then
+    exec emcc "$@"
+fi
+
+# --------------------------------------------------
+# Find the desired output file
+# --------------------------------------------------
+output_o=""
+pos=1
+while [[ $pos -le $# ]]
+do
+    arg="${!pos}"
+    if [[ "$arg" == "-o" ]]
+    then
+        ((pos++))
+        output_o="${!pos}"
+        break
+    elif [[ "$arg" == -o* ]]
+    then
+        output_o="${arg#-o}"
+        break
+    fi
+    ((pos++))
+done
+
+# weird grok show off trick :)
+
+: ${output_o:="${input_m%.m}.o"}
+bc="${output_o%.o}.bc"
+
+# --------------------------------------------------
+# Build mulle-clang args: remove -c, -o and its argument, and the .m source
+# --------------------------------------------------
+mulle_args=()
+pos=1
+while [[ $pos -le $# ]]
+do
+    arg="${!pos}"
+    ((pos++))
+
+    case "$arg" in
+        -c)                 continue ;;                 # drop -c
+        -o)                 ((pos++)) ; continue ;;     # drop -o AND the next argument
+        -o*)                continue ;;                 # drop combined -ofoo.o
+        "$input_m")         continue ;;                 # we add it manually later
+        *)                  mulle_args+=("$arg") ;;
+    esac
+done
+
+mulle-clang "${mulle_args[@]}" -emit-llvm -c -o "$bc" "$input_m"
+
+# --------------------------------------------------
+# Build emcc args: just drop the original .m file
+# --------------------------------------------------
+emcc_args=()
+for arg in "$@"
+do
+    [[ "$arg" != "$input_m" ]] && emcc_args+=("$arg")
+done
+
+emcc "${emcc_args[@]}" -c -o "$output_o" "$bc"
+
