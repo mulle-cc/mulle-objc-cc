@@ -1,4 +1,5 @@
 # mulle-objc-cc Library Documentation for AI
+<!-- Keywords: build-config, compiler -->
 
 ## 1. Introduction & Purpose
 
