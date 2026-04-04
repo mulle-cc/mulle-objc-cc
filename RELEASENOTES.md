@@ -1,3 +1,7 @@
-## 0.2.0
+### 0.2.1
 
-Various small improvements
+
+
+
+* Move documentation table-of-contents into asset/dox for tooling compatibility
+* Add build/search keywords to TOC header to improve indexing

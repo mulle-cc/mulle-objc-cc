@@ -18,3 +18,4 @@ build-*/
 environment-user-*.sh
 .roam
 .graveyard
+*.tmp.*
